@@ -49,15 +49,23 @@ def test_get_icb_spending_data():
         "https://openprescribing.net/api/1.0/spending_by_org/?org_type=icb&code=0407010AD&format=json",
         json=[
             {
-                "items": 1,
+                "items": 3,
                 "quantity": 68,
                 "actual_cost": 10.3,
-                "date": "2019-04-01",
+                "date": "2019-04-02",
                 "row_id": "QH8",
                 "row_name": "NHS MID AND SOUTH ESSEX INTEGRATED CARE BOARD",
             },
             {
-                "items":1,
+                "items": 1,
+                "quantity": 68,
+                "actual_cost": 10.3,
+                "date": "2019-04-02",
+                "row_id": "QH8",
+                "row_name": "NHS DERBY AND DERBYSHIRE INTEGRATED CARE BOARD",
+            },
+            {
+                "items":2,
                 "quantity":12.0,
                 "actual_cost":2.41,
                 "date":"2019-04-01",
@@ -75,7 +83,7 @@ def test_get_icb_spending_data():
         ],
     )
     assert optool.get_icb_spending_data("0407010AD") == [
-        '2019-04-01 NHS MID AND SOUTH ESSEX INTEGRATED CARE BOARD 1',
-        '2019-04-01 NHS BIRMINGHAM AND SOLIHULL INTEGRATED CARE BOARD 1', 
+        '2019-04-02 NHS MID AND SOUTH ESSEX INTEGRATED CARE BOARD 3',
+        '2019-04-01 NHS BIRMINGHAM AND SOLIHULL INTEGRATED CARE BOARD 2', 
         '2019-04-01 NHS DERBY AND DERBYSHIRE INTEGRATED CARE BOARD 2'
         ]
