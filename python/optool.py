@@ -25,7 +25,7 @@ def get_chemical_name(chemical_code):
     
     # checks the chemical code entered is 9 characters long
     if not (len(chemical_code) == 9):
-        raise ValueError("must be 9 character chemical code")
+        raise SystemExit(ValueError("must be 9 character chemical code"))
     
     # fetches the chemical name from the api
     url = "https://openprescribing.net/api/1.0/bnf_code"   
@@ -34,7 +34,7 @@ def get_chemical_name(chemical_code):
     
     # checks if there are any results returned from the get request
     if (len(results) == 0):
-        raise ValueError("not found")
+        raise SystemExit(ValueError("not found"))
         
     # Exact matches return just one result if the code is found or none if it is not
     result = results[0]

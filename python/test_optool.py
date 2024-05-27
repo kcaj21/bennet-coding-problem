@@ -46,7 +46,7 @@ def test_chemical_name():
 
 
 def test_not_full_code():
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(SystemExit) as excinfo:
         optool.get_chemical_name("0407010ADAAABAB")
     assert "must be 9 character chemical code" in str(excinfo.value)
 
@@ -60,7 +60,7 @@ def test_code_not_present():
         json=[],
     )
 
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(SystemExit) as excinfo:
         optool.get_chemical_name("0000000AA")
     assert "not found" in str(excinfo.value)
     
