@@ -12,7 +12,7 @@ def test_api_fetch():
         status=200,
     )
     responses.get(
-        "https://openprescribing.net/api/1.0",
+        "https://openpress5cribing.net/api/1.0",
         json={"msg": "not found"},
         status=404,
     )
@@ -20,7 +20,7 @@ def test_api_fetch():
     resp = requests.get("https://openprescribing.net/api/1.0")
     assert resp.status_code == 200
     
-    resp = requests.get("https://openprescribing.net/api/1.0")
+    resp = requests.get("https://openpress5cribing.net/api/1.0")
     assert resp.status_code == 404
     
 def test_failed_api_fetch():    
