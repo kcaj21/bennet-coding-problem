@@ -1,7 +1,32 @@
 import pytest
 import responses
+from responses.registries import OrderedRegistry
+import requests
 import optool
 
+@responses.activate(registry=OrderedRegistry)
+def test_api_fetch():
+    responses.get(
+        "https://openprescribing.net/api/1.0",
+        json={"msg": "OK"},
+        status=200,
+    )
+    responses.get(
+        "https://openprescribing.net/api/1.0",
+        json={"msg": "not found"},
+        status=404,
+    )
+
+    resp = requests.get("https://openprescribing.net/api/1.0")
+    assert resp.status_code == 200
+    
+    resp = requests.get("https://openprescribing.net/api/1.0")
+    assert resp.status_code == 404
+    
+def test_failed_api_fetch():    
+    with pytest.raises(SystemExit) as sample:
+        optool.api_fetch("http://", params=None)
+    assert sample.type == SystemExit   
 
 @responses.activate
 def test_chemical_name():
@@ -20,14 +45,12 @@ def test_chemical_name():
     assert optool.get_chemical_name("0407010AD") == "Paracetamol and ibuprofen"
 
 
-# @pytest.mark.xfail(reason="not implemented")
 def test_not_full_code():
     with pytest.raises(ValueError) as excinfo:
         optool.get_chemical_name("0407010ADAAABAB")
     assert "must be 9 character chemical code" in str(excinfo.value)
 
 
-# @pytest.mark.xfail(reason="not implemented")
 @responses.activate
 def test_code_not_present():
     # OpenPrescribing returns an empty list for codes that it doesn't recognise
@@ -41,7 +64,6 @@ def test_code_not_present():
         optool.get_chemical_name("0000000AA")
     assert "not found" in str(excinfo.value)
     
-# @pytest.mark.xfail(reason="not implemented")
 @responses.activate
 def test_get_icb_spending_data():
     responses.add(
