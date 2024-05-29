@@ -80,8 +80,7 @@ def filter_spending_data(data):
     new_list.sort(key=lambda x: x["date"], reverse=True)
     
     return new_list
-    
-    
+        
 if __name__ == "__main__":
     chemical_code = sys.argv[1]
     main(chemical_code)
